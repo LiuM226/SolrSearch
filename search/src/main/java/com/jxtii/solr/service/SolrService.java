@@ -19,7 +19,6 @@ import org.apache.solr.common.params.SolrParams;
 import org.apache.solr.common.util.ContentStream;
 import org.apache.solr.common.util.ContentStreamBase;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -32,14 +31,10 @@ import java.util.*;
  * Created by guolf on 17/7/3.
  */
 @Service
-@com.alibaba.dubbo.config.annotation.Service(version = "1.0.0")
 public class SolrService implements ISolrService {
 
     @Autowired
     private SolrClient solrClient;
-
-    @Autowired
-    private JmsTemplate jmsTemplate;
 
     private Logger logger = Logger.getLogger(getClass());
 
@@ -81,14 +76,11 @@ public class SolrService implements ISolrService {
         } catch (IOException ex) {
             logger.error(ex);
             result = new SolrResult(content, ex.toString());
-//            jmsTemplate.convertAndSend("result", result);
         } catch (SolrServerException ex) {
             logger.error(ex);
             result = new SolrResult(content, ex.toString());
-//            jmsTemplate.convertAndSend("result", result);
         } catch (Exception ex) {
             result = new SolrResult(content, ex.toString());
-//            jmsTemplate.convertAndSend("result", result);
         }
         return result;
     }
@@ -153,7 +145,7 @@ public class SolrService implements ISolrService {
         return null;
     }
 
-    public SolrResult queryForObject(QueryCondition condition,Class cls) {
+    public SolrResult queryForObject(QueryCondition condition, Class cls) {
         try {
             SolrParams params = getSolrParams(condition);
             QueryResponse response = solrClient.query(params);
