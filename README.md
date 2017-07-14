@@ -1,5 +1,29 @@
 # 全文检索服务使用文档
 
+## 安装SDK
+
+### Maven
+
+```
+<dependency>
+    <groupId>com.github.guolf</groupId>
+    <artifactId>solr-sdk</artifactId>
+    <version>0.0.5</version>
+</dependency>
+```
+
+### Gradle
+
+```
+compile "com.github.guolf:solr-sdk:0.0.5"
+```
+
+## 运行搜索服务
+
+```
+cd search
+mvn clean package -Dmaven.test.skip=true
+```
 
 ## 技术架构
 
@@ -29,7 +53,7 @@
 	
 ```
 SolrRequestService<TestContent> requestService = SolrRequestService.getInstance();
-requestService.setBaseUrl("http://localhost:8080/");
+requestService.setBaseUrl("http://localhost:8080/"); // 索引服务接口地址
 ```
 
 * 在需要创建索引的字段上添加注解：主键: `@SolrField(type = FieldType.PRIMARY)`,文件:`@SolrField(type = FieldType.FILE)`,普通字段添加`@SolrField`即可。

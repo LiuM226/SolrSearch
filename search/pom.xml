@@ -25,8 +25,14 @@
             <scope>test</scope>
         </dependency>
 
+        <!--<dependency>-->
+            <!--<groupId>com.jxtii.solr</groupId>-->
+            <!--<artifactId>solr-sdk</artifactId>-->
+            <!--<version>0.0.5</version>-->
+        <!--</dependency>-->
+
         <dependency>
-            <groupId>com.jxtii.solr</groupId>
+            <groupId>com.github.guolf</groupId>
             <artifactId>solr-sdk</artifactId>
             <version>0.0.5</version>
         </dependency>

@@ -10,7 +10,6 @@ import java.lang.reflect.*;
 
 /**
  * 反射工具类
- * @date 17/7/8.
  * @author guolf
  */
 public class Reflections {
@@ -233,7 +232,6 @@ public class Reflections {
     /**
      * 通过反射, 获得Class定义中声明的父类的泛型参数的类型.
      * 如无法找到, 返回Object.class.
-     * <p>
      * 如public UserDao extends HibernateDao<User,Long>
      *
      * @param clazz clazz The class to introspect

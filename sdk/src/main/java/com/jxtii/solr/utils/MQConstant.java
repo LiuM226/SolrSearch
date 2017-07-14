@@ -2,7 +2,6 @@ package com.jxtii.solr.utils;
 
 /**
  * MQ destination 常量
- * @date 17/7/8.
  * @author guolf
  */
 public class MQConstant {
