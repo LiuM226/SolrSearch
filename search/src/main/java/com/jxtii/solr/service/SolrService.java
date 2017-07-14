@@ -4,9 +4,9 @@ import com.jxtii.solr.api.ISolrService;
 import com.jxtii.solr.entity.QueryCondition;
 import com.jxtii.solr.entity.SolrContent;
 import com.jxtii.solr.entity.SolrResult;
+import com.jxtii.solr.utils.MQConstant;
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrClient;
-import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.request.AbstractUpdateRequest;
 import org.apache.solr.client.solrj.request.ContentStreamUpdateRequest;
 import org.apache.solr.client.solrj.response.QueryResponse;
@@ -23,7 +23,6 @@ import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -49,7 +48,7 @@ public class SolrService implements ISolrService {
      * @param content 内容
      */
     @Override
-    public SolrResult createIndexWithFile(SolrContent content) {
+    public SolrResult createIndex(SolrContent content) {
         SolrResult result;
         try {
             if (StringUtils.isEmpty(content.getFilePath()) || !content.getFilePath().startsWith("http")) {
@@ -76,21 +75,22 @@ public class SolrService implements ISolrService {
                 up.setAction(AbstractUpdateRequest.ACTION.COMMIT, true, true);
                 solrClient.request(up);
                 result = new SolrResult();
-//                jmsTemplate.convertAndSend("result", result);
             }
-        } catch (IOException ex) {
-            logger.error(ex);
-            result = new SolrResult(content, ex.toString());
-//            jmsTemplate.convertAndSend("result", result);
-        } catch (SolrServerException ex) {
-            logger.error(ex);
-            result = new SolrResult(content, ex.toString());
-//            jmsTemplate.convertAndSend("result", result);
         } catch (Exception ex) {
+            logger.error(ex);
             result = new SolrResult(content, ex.toString());
-//            jmsTemplate.convertAndSend("result", result);
         }
         return result;
+    }
+
+    /**
+     * 通过MQ方式创建索引
+     *
+     * @param content
+     */
+    public void createIndexByMQ(SolrContent content) {
+        SolrResult result = createIndex(content);
+        jmsTemplate.convertAndSend(MQConstant.MQ_RECEIVE_RESULT, result);
     }
 
     /**
@@ -153,7 +153,7 @@ public class SolrService implements ISolrService {
         return null;
     }
 
-    public SolrResult queryForObject(QueryCondition condition,Class cls) {
+    public SolrResult queryForObject(QueryCondition condition, Class cls) {
         try {
             SolrParams params = getSolrParams(condition);
             QueryResponse response = solrClient.query(params);

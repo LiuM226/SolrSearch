@@ -33,9 +33,6 @@ public class SolrController {
     @ApiOperation(value = "根据条件进行查询", notes = "根据多关键字查询：keywords=attr_field3:field3 and id:*a*")
     @GetMapping("/query.action")
     public ResponseEntity query(@ModelAttribute QueryCondition condition) {
-//        if (condition == null || StringUtils.isEmpty(condition.getKeywords())) {
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("查询条件不能为空");
-//        }
         logger.info(condition.getKeywords());
         SolrResult result = solrService.query(condition);
         logger.info(result);
@@ -52,7 +49,7 @@ public class SolrController {
             logger.error("ID不能为空");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ID不能为空");
         }
-        SolrResult result = solrService.createIndexWithFile(content);
+        SolrResult result = solrService.createIndex(content);
         logger.info(result);
         if (result.getCode() == 200) {
             return ResponseEntity.ok().build();

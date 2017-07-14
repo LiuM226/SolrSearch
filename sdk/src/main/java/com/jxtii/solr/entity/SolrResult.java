@@ -15,6 +15,7 @@ public class SolrResult<T> implements Serializable {
 
     public SolrResult() {
         this.code = 200;
+        this.msg = "OK";
     }
 
     public SolrResult(T data) {

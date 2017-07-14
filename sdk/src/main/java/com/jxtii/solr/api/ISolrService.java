@@ -11,7 +11,7 @@ import com.jxtii.solr.entity.SolrResult;
  */
 public interface ISolrService {
 
-    public SolrResult createIndexWithFile(SolrContent content);
+    public SolrResult createIndex(SolrContent content);
 
     public SolrResult createIndexNoFile(SolrContent content);
 

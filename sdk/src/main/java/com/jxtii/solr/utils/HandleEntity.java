@@ -38,7 +38,6 @@ public class HandleEntity<T> {
                 if (solrField != null) {
                     if (solrField.type() == FieldType.NORMAL) {
                         Object value = Reflections.invokeGetter(getData(), f.getName());
-                        System.out.println("value = " + value);
                         if(f.getType() == Date.class){
                             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                             map.put(f.getName(), simpleDateFormat.format(value));
