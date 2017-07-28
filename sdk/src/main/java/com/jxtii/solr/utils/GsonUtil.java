@@ -9,7 +9,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 /**
- * JSON序列号工具
+ * JSON序列化工具
  * @date 17/7/8.
  * @author guolf
  */

@@ -7,12 +7,12 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URLEncoder;
-import java.util.logging.Logger;
 
 /**
  * 网络请求工具类
- * @date 17/7/8.
+ *
  * @author guolf
+ * @date 17/7/8.
  */
 public class OkHttpUtil {
 
@@ -23,7 +23,8 @@ public class OkHttpUtil {
 
     /**
      * post请求
-     * @param url 请求地址
+     *
+     * @param url  请求地址
      * @param json 请求参数
      * @return 成功返回OK
      * @throws IOException
@@ -43,7 +44,8 @@ public class OkHttpUtil {
 
     /**
      * GET请求
-     * @param url 请求地址
+     *
+     * @param url       请求地址
      * @param condition 请求条件
      * @return
      * @throws IOException
@@ -87,7 +89,7 @@ public class OkHttpUtil {
 
     public static String escapeQueryChars(String s) {
         try {
-            if(!StringUtils.isEmpty(s)) {
+            if (!StringUtils.isEmpty(s)) {
                 return URLEncoder.encode(s, "UTF-8");
             }
         } catch (Exception ex) {
