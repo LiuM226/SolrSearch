@@ -6,11 +6,14 @@ import com.jxtii.solr.entity.QueryCondition;
 import com.jxtii.solr.entity.SolrResult;
 import com.jxtii.solr.service.SolrService;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.net.URLDecoder;
 
 /**
  * Created by guolf on 17/7/1.
@@ -37,8 +40,16 @@ public class SolrController {
 //            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("查询条件不能为空");
 //        }
         logger.info(condition.getKeywords());
+
+        if(!StringUtils.isEmpty(condition.getKeywords())){
+            try {
+                condition.setKeywords(URLDecoder.decode(condition.getKeywords(),"UTF-8"));
+            }catch (Exception ex){
+                logger.error(ex);
+            }
+        }
+        logger.info(condition.getKeywords());
         SolrResult result = solrService.query(condition);
-        logger.info(result);
         return ResponseEntity.ok(new Gson().toJson(result));
     }
 

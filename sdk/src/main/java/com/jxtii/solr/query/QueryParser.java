@@ -146,9 +146,9 @@ public class QueryParser {
 
         protected static final String DOUBLEQUOTE = "\"";
 
-        protected final String[] RESERVED_CHARS = {DOUBLEQUOTE, "+", "-", "&&", "||", "!", "(", ")", "{", "}", "[", "]",
+        protected final String[] RESERVED_CHARS = {DOUBLEQUOTE,"+",  "-", "&&", "||", "!", "(", ")", "{", "}", "[", "]",
                 "^", "~", "*", "?", ":", "\\"};
-        protected String[] RESERVED_CHARS_REPLACEMENT = {"\\" + DOUBLEQUOTE, "\\+", "\\-", "\\&\\&", "\\|\\|", "\\!",
+        protected String[] RESERVED_CHARS_REPLACEMENT = {"\\" + DOUBLEQUOTE, "\\+","\\-", "\\&\\&", "\\|\\|", "\\!",
                 "\\(", "\\)", "\\{", "\\}", "\\[", "\\]", "\\^", "\\~", "\\*", "\\?", "\\:", "\\\\"};
 
         @Override
@@ -284,9 +284,9 @@ public class QueryParser {
 
         protected String createRangeFragment(Object rangeStart, Object rangeEnd) {
             String rangeFragment = "";
-            rangeFragment += (rangeStart != null ? filterCriteriaValue(rangeStart) : Criteria.WILDCARD);
+            rangeFragment += (rangeStart != null ? filterCriteriaValue(rangeStart)+"" : Criteria.WILDCARD);
             rangeFragment += RANGE_OPERATOR;
-            rangeFragment += (rangeEnd != null ? filterCriteriaValue(rangeEnd) : Criteria.WILDCARD);
+            rangeFragment += (rangeEnd != null ? filterCriteriaValue(rangeEnd)+"" : Criteria.WILDCARD);
             return rangeFragment;
         }
 
