@@ -2,8 +2,12 @@ package com.jxtii.solr.utils;
 
 import com.jxtii.solr.entity.QueryCondition;
 import okhttp3.*;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 
 /**
  * 网络请求工具类
@@ -11,6 +15,8 @@ import java.io.IOException;
  * @author guolf
  */
 public class OkHttpUtil {
+
+    private static Logger logger = LoggerFactory.getLogger(OkHttpUtil.class);
 
     public static final MediaType JSON
             = MediaType.parse("application/json; charset=utf-8");
@@ -52,7 +58,7 @@ public class OkHttpUtil {
                 HttpUrl.Builder builder = originalHttpUrl.newBuilder()
                         .addQueryParameter("show", condition.getShow())
                         .addQueryParameter("from", condition.getFrom())
-                        .addQueryParameter("keywords", condition.getKeywords());
+                        .addQueryParameter("keywords", escapeQueryChars(condition.getKeywords()));
 
                 if (condition.getRows() > 0) {
                     builder.addQueryParameter("rows", condition.getStart() + "");
@@ -77,6 +83,17 @@ public class OkHttpUtil {
         Response response = client.newCall(request).execute();
         return response.body().string();
 
+    }
+
+    public static String escapeQueryChars(String s) {
+        try {
+            if (!StringUtils.isEmpty(s)) {
+                return URLEncoder.encode(s, "UTF-8");
+            }
+        } catch (Exception ex) {
+            logger.error(ex.toString());
+        }
+        return "";
     }
 
 
